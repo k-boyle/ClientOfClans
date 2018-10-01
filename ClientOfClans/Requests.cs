@@ -31,17 +31,10 @@ namespace ClientOfClans
         public async Task<T> SendRequestAsync<T>(string endpoint)
         {
             await _semaphore.WaitAsync();
-            return await InternalSendRequestAsync<T>(endpoint);
-        }
-
-        private async Task<T> InternalSendRequestAsync<T>(string endpoint)
-        {
             try
             {
                 using (var response = await _client.GetAsync($"{BaseUrl}{endpoint}"))
                 {
-                    Console.WriteLine($"{BaseUrl}{endpoint}");
-                    Console.WriteLine(await response.Content.ReadAsStringAsync());
                     if (!response.IsSuccessStatusCode)
                         throw new Exception(response.ReasonPhrase);
 
