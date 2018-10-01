@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClashSharp", "ClashSharp\ClashSharp.csproj", "{B4AE9CEC-172B-4E62-B5A3-71C35A52FE60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientOfClans", "ClientOfClans\ClientOfClans.csproj", "{B4AE9CEC-172B-4E62-B5A3-71C35A52FE60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
