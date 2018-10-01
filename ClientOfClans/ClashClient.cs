@@ -21,7 +21,7 @@ namespace ClientOfClans
             _requests = new Requests(_config.Token);
         }
 
-        public Task<ClanData> GetClanDataAsync(string clanTag = "")
+        public async Task<ClanData> GetClanDataAsync(string clanTag = "")
         {
             if (string.IsNullOrWhiteSpace(clanTag) &&
                     (_config is null || string.IsNullOrWhiteSpace(_config?.DefaultClanTag)))
@@ -29,7 +29,7 @@ namespace ClientOfClans
 
             var tag = string.IsNullOrWhiteSpace(clanTag) ? _config.DefaultClanTag : clanTag;
 
-            return ClanData.CreateClanDataAsync(_requests, tag.Replace("#", "%23"));
+            return await ClanData.CreateClanDataAsync(_requests, tag.Replace("#", "%23")).ConfigureAwait(false);
         }
     }
 }

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace ClientOfClans.Models.Clans
 {
-    internal class ClanDataModel
+    internal struct ClanDataModel
     {
         [JsonProperty("tag")]
         public string Tag { get; set; }
@@ -60,7 +60,7 @@ namespace ClientOfClans.Models.Clans
         public MemberList[] MemberList { get; set; }
     }
 
-    internal class BadgeUrls
+    internal struct BadgeUrls
     {
         [JsonProperty("small")]
         public Uri Small { get; set; }
@@ -72,7 +72,7 @@ namespace ClientOfClans.Models.Clans
         public Uri Medium { get; set; }
     }
 
-    internal class Location
+    internal struct Location
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -87,7 +87,7 @@ namespace ClientOfClans.Models.Clans
         public string CountryCode { get; set; }
     }
 
-    internal class MemberList
+    internal struct MemberList
     {
         [JsonProperty("tag")]
         public string Tag { get; set; }
@@ -123,7 +123,7 @@ namespace ClientOfClans.Models.Clans
         public int DonationsReceived { get; set; }
     }
 
-    internal class League
+    internal struct League
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -135,7 +135,7 @@ namespace ClientOfClans.Models.Clans
         public IconUrls IconUrls { get; set; }
     }
 
-    internal class IconUrls
+    internal struct IconUrls
     {
         [JsonProperty("small")]
         public Uri Small { get; set; }

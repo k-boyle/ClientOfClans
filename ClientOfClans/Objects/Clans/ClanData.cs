@@ -153,6 +153,6 @@ namespace ClientOfClans.Objects.Clans
             => _model = model;
 
         internal static async Task<ClanData> CreateClanDataAsync(Requests requests, string clanTag)
-            => new ClanData(await requests.SendRequestAsync<Model>($"/clans/{clanTag}"));
+            => new ClanData(await requests.SendRequestAsync<Model>($"/clans/{clanTag}").ConfigureAwait(false));
     }
 }

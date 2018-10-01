@@ -30,15 +30,15 @@ namespace ClientOfClans
 
         public async Task<T> SendRequestAsync<T>(string endpoint)
         {
-            await _semaphore.WaitAsync();
+            await _semaphore.WaitAsync().ConfigureAwait(false);
             try
             {
-                using (var response = await _client.GetAsync($"{BaseUrl}{endpoint}"))
+                using (var response = await _client.GetAsync($"{BaseUrl}{endpoint}").ConfigureAwait(false))
                 {
                     if (!response.IsSuccessStatusCode)
                         throw new Exception(response.ReasonPhrase);
 
-                    var result = await response.Content.ReadAsStringAsync();
+                    var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     return JsonConvert.DeserializeObject<T>(result);
                 }
             }
