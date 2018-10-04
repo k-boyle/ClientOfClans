@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Model = ClientOfClans.Models.Clans.ClanDataModel;
 
@@ -144,62 +145,10 @@ namespace ClientOfClans.Objects.Clans
         };
 
         /// <summary>
-        /// Fetches the current members in the clan.
+        /// The clans current members.
         /// </summary>
-        /// <returns>A collection of ClanMember's.</returns>
-        public IEnumerable<ClanMember> GetClanMembers()
-        {
-            foreach (var member in _model.MemberList)
-            {
-                var newMember = new ClanMember
-                {
-                    ClanRank = member.ClanRank,
-                    Donations = member.Donations,
-                    League = new League
-                    {
-                        IconUrls = new ImageUris
-                        {
-                            Tiny = member.League.IconUrls.Tiny,
-                            Medium = member.League.IconUrls.Medium,
-                            Small = member.League.IconUrls.Small
-                        },
-                        Id = member.League.Id,
-                        Name = member.League.Name
-                    },
-                    Level = member.ExpLevel,
-                    Name = member.Name,
-                    PreviousClanRank = member.PreviousClanRank,
-                    Received = member.DonationsReceived,
-                    Tag = member.Tag,
-                    Trophies = member.Trophies,
-                    VersusTrophies = member.VersusTrophies
-                };
-
-                switch (member.Role)
-                {
-                    case "admin":
-                        newMember.Role = ClanRole.Elder;
-                        break;
-
-                    case "coLeader":
-                        newMember.Role = ClanRole.CoLeader;
-                        break;
-
-                    case "member":
-                        newMember.Role = ClanRole.Member;
-                        break;
-
-                    case "leader":
-                        newMember.Role = ClanRole.Leader;
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(member));
-                }
-
-                yield return newMember;
-            }
-        }
+        public IReadOnlyCollection<ClanMember> ClanMembers
+            => _model.MemberList.Select(member => new ClanMember(member)).ToList();
 
         private ClanData(Model model)
             => _model = model;

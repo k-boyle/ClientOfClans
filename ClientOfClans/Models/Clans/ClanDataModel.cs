@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace ClientOfClans.Models.Clans
 {
@@ -57,78 +56,6 @@ namespace ClientOfClans.Models.Clans
         public int Members { get; set; }
 
         [JsonProperty("memberList")]
-        public MemberList[] MemberList { get; set; }
-    }
-
-    internal struct BadgeUrls
-    {
-        [JsonProperty("small")]
-        public Uri Small { get; set; }
-
-        [JsonProperty("large")]
-        public Uri Large { get; set; }
-
-        [JsonProperty("medium")]
-        public Uri Medium { get; set; }
-    }
-
-    internal struct MemberList
-    {
-        [JsonProperty("tag")]
-        public string Tag { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("role")]
-        public string Role { get; set; }
-
-        [JsonProperty("expLevel")]
-        public int ExpLevel { get; set; }
-
-        [JsonProperty("league")]
-        public League League { get; set; }
-
-        [JsonProperty("trophies")]
-        public int Trophies { get; set; }
-
-        [JsonProperty("versusTrophies")]
-        public int VersusTrophies { get; set; }
-
-        [JsonProperty("clanRank")]
-        public int ClanRank { get; set; }
-
-        [JsonProperty("previousClanRank")]
-        public int PreviousClanRank { get; set; }
-
-        [JsonProperty("donations")]
-        public int Donations { get; set; }
-
-        [JsonProperty("donationsReceived")]
-        public int DonationsReceived { get; set; }
-    }
-
-    internal struct League
-    {
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("iconUrls")]
-        public IconUrls IconUrls { get; set; }
-    }
-
-    internal struct IconUrls
-    {
-        [JsonProperty("small")]
-        public Uri Small { get; set; }
-
-        [JsonProperty("tiny")]
-        public Uri Tiny { get; set; }
-
-        [JsonProperty("medium")]
-        public Uri Medium { get; set; }
+        public ClanMemberModel[] MemberList { get; set; }
     }
 }

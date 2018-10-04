@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ClientOfClans.Models;
 using ClientOfClans.Models.Clans;
+using ClientOfClans.Objects;
 using ClientOfClans.Objects.Clans;
 using ClientOfClans.RequestParameters;
 using Newtonsoft.Json;
+using ClanDataModel = ClientOfClans.Models.Clans.ClanDataModel;
 
 namespace ClientOfClans
 {
@@ -52,21 +55,47 @@ namespace ClientOfClans
         /// <returns>A ClansSearchResult object that yields the results of the search.</returns>
         public async Task<ClansSearchResult> SearchClansAsync(ClanParameters parameters)
         {
-            var clanList = new List<ClanData>();
-
-            var clans = await _requests.SendRequestAsync<ClansDataModel>("clans", parameters);
+            var clans = await _requests.SendRequestAsync<ClansDataModel>("clans", parameters).ConfigureAwait(false);
             
-            clanList.AddRange(ProcessClans(clans.Items));
-
             return new ClansSearchResult
             {
                 After = clans.Paging.Cursors.After,
                 Before = clans.Paging.Cursors.Before,
-                Clans = clanList
+                Clans = ProcessClans(clans.Items).ToList()
             };
         }
 
-        private static IEnumerable<ClanData> ProcessClans(IEnumerable<Item> items)
+        /// <summary>
+        /// Gets the clan members of the default tag in config.
+        /// </summary>
+        /// <param name="parameters">The filtering parameters to use.</param>
+        /// <returns>A ClanMembersResult that yields the results of the request.</returns>
+        public Task<ClanMembersResult> GetClanMembersAsync(ClanMembersParameters parameters = null)
+            => GetClanMembersAsync(string.Empty, parameters);
+
+        /// <summary>
+        /// Get the clan members of the specified tag.
+        /// </summary>
+        /// <param name="clanTag">The clan tag that you want the members for.</param>
+        /// <param name="parameters">The filtering parameters to use.</param>
+        /// <returns>A ClanMembersResult that yields the results of the request</returns>
+        public async Task<ClanMembersResult> GetClanMembersAsync(string clanTag, ClanMembersParameters parameters = null)
+        {
+            var tag = GetClanTag(clanTag);
+
+            var members = await _requests.SendRequestAsync<ClanMembersDataModel>($"clans/{tag}/members", parameters).ConfigureAwait(false);
+
+            var memberList = members.Items.Select(x => new ClanMember(x)).ToList();
+
+            return new ClanMembersResult
+            {
+                After = members.Paging.Cursors.After,
+                Before = members.Paging.Cursors.Before,
+                ClanMembers = memberList
+            };
+        }
+
+        private static IEnumerable<ClanData> ProcessClans(IEnumerable<ClanDataModel> items)
             => items.Select(item => ClanData.CreateClanData(JsonConvert.DeserializeObject<ClanDataModel>(JsonConvert.SerializeObject(item))));
 
         private string GetClanTag(string clanTag)
