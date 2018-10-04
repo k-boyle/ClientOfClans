@@ -9,18 +9,54 @@ namespace ClientOfClans.Objects.Clans
     {
         private readonly Model _model;
 
+        /// <summary>
+        /// The clans tag.
+        /// </summary>
         public string Tag => _model.Tag;
+
+        /// <summary>
+        /// Tha clans name.
+        /// </summary>
         public string Name => _model.Name;
+
+        /// <summary>
+        /// The clans description.
+        /// </summary>
         public string Description => _model.Description;
 
+        /// <summary>
+        /// The clans level.
+        /// </summary>
         public int Level => _model.ClanLevel;
+
+        /// <summary>
+        /// The clans points.
+        /// </summary>
         public int Points => _model.ClanPoints;
+
+        /// <summary>
+        /// The clans versus (builders base) points.
+        /// </summary>
         public int VersusPoints => _model.ClanVersusPoints;
+
+        /// <summary>
+        /// The required trophies to join that clan.
+        /// </summary>
         public int RequiredTrophies => _model.RequiredTrophies;
+
+        /// <summary>
+        /// The current member count of the clan.
+        /// </summary>
         public int MemberCount => _model.Members;
 
+        /// <summary>
+        /// Whether or not the clans war log is public.
+        /// </summary>
         public bool PublicWarLog => _model.IsWarLogPublic;
 
+        /// <summary>
+        /// The joinability of the clan.
+        /// </summary>
         public JoinType JoinType
         {
             get
@@ -42,6 +78,9 @@ namespace ClientOfClans.Objects.Clans
             }
         }
 
+        /// <summary>
+        /// How often the clan wars.
+        /// </summary>
         public WarFrequency WarFrequency
         {
             get
@@ -72,6 +111,9 @@ namespace ClientOfClans.Objects.Clans
             }
         }
 
+        /// <summary>
+        /// The location of the clan.
+        /// </summary>
         public Location Location => new Location
         {
             Id = _model.Location.Id,
@@ -80,6 +122,9 @@ namespace ClientOfClans.Objects.Clans
             Name = _model.Location.Name
         };
 
+        /// <summary>
+        /// Image Uri's of the clans badge.
+        /// </summary>
         public ImageUris BadgeUrls => new ImageUris
         {
             Large = _model.BadgeUrls.Large,
@@ -87,6 +132,9 @@ namespace ClientOfClans.Objects.Clans
             Small = _model.BadgeUrls.Small
         };
 
+        /// <summary>
+        /// The clans war stats.
+        /// </summary>
         public ClanWarStats WarStats => new ClanWarStats
         {
             Losses = _model.WarLosses,
@@ -95,6 +143,10 @@ namespace ClientOfClans.Objects.Clans
             WinStreak = _model.WarWinStreak
         };
 
+        /// <summary>
+        /// Fetches the current members in the clan.
+        /// </summary>
+        /// <returns>A collection of ClanMember's.</returns>
         public IEnumerable<ClanMember> GetClanMembers()
         {
             foreach (var member in _model.MemberList)
@@ -151,8 +203,11 @@ namespace ClientOfClans.Objects.Clans
 
         private ClanData(Model model)
             => _model = model;
-
+        
         internal static async Task<ClanData> CreateClanDataAsync(Requests requests, string clanTag)
-            => new ClanData(await requests.SendRequestAsync<Model>($"/clans/{clanTag}").ConfigureAwait(false));
+            => new ClanData(await requests.SendRequestAsync<Model>($"clans/{clanTag}").ConfigureAwait(false));
+
+        internal static ClanData CreateClanData(Model model)
+            => new ClanData(model);
     }
 }

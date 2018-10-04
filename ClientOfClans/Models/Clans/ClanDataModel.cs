@@ -72,21 +72,6 @@ namespace ClientOfClans.Models.Clans
         public Uri Medium { get; set; }
     }
 
-    internal struct Location
-    {
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("isCountry")]
-        public bool IsCountry { get; set; }
-
-        [JsonProperty("countryCode")]
-        public string CountryCode { get; set; }
-    }
-
     internal struct MemberList
     {
         [JsonProperty("tag")]

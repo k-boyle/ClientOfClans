@@ -1,4 +1,5 @@
 ﻿using System;
+using ClientOfClans.Attributes;
 
 namespace ClientOfClans.Objects
 {
@@ -70,11 +71,22 @@ namespace ClientOfClans.Objects
 
     public enum WarFrequency
     {
+        [StringValue("unkown")]
         Unknown,
+
+        [StringValue("always")]
         Always,
+
+        [StringValue("moreThanOncePerWeek")]
         MoreThanOncePerWeek,
+
+        [StringValue("oncePerWeek")]
         OncePerWeek,
+
+        [StringValue("lessThanOncePerWeek")]
         LessThanOncePerWeek,
+
+        [StringValue("never")]
         Never
     }
 }
